@@ -23,25 +23,33 @@
 
 // app.listen(PORT , ()=> console.log(' Server running on port'+ PORT))
 
-import 'dotenv/config';
+
+// 👉 server.js ya index.js mein
 import express from 'express';
 import cors from 'cors';
-import connectDB from '../config/mongodb.js';
-import userRouter from '../routes/userRoutes.js';
+import 'dotenv/config';
+import connectDB from './config/mongodb.js';
+import userRouter from './routes/userRoutes.js';
+import bodyParser from 'body-parser';
 
-// App Config
 const app = express();
+const PORT = process.env.PORT || 4000;
 
-// Middleware
+// ✅ Raw parser only for Clerk webhook
+app.use('/api/user/webhooks', bodyParser.raw({ type: '*/*' }));
+
+// ✅ JSON parser for rest of the app
 app.use(express.json());
 app.use(cors());
 
-// Connect Database
+// ✅ Connect Database
 connectDB();
 
-// API Routes
+// ✅ Routes
 app.get('/', (req, res) => res.send('✅ API Running Successfully'));
 app.use('/api/user', userRouter);
 
-// ✅ Important: Export as default for Vercel
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+
+// 👉 Vercel support
 export default app;
