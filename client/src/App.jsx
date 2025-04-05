@@ -6,11 +6,14 @@ import Result from './pages/Result'
 import Home from './pages/Home'
 import Navbar from './components/navbar'
 import Footer from './components/Footer'
+import {ToastContainer} from 'react-toastify'
+import "react-toastify/dist/ReactToastify.css"
 const App = () => {
   return (
     <>
     
     <div className=' min-h-screen bg-slate-50'>
+      <ToastContainer position='bottom-right'/>
 
 <Navbar/>
 
