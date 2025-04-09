@@ -1,10 +1,7 @@
 import { Webhook } from "svix";
 import userModel from "../models/userModel.js";
-import stripe from 'stripe'
-import transactionModel from "../models/transactionModel.js";
 
 const clerkWebHooks = async (req, res) => {
-
   console.log("🔔 Webhook route hit hua");
   try {
     const whook = new Webhook(process.env.CLERK_WEBHOOK_SECRET);
@@ -63,121 +60,18 @@ const clerkWebHooks = async (req, res) => {
   }
 };
 
-
-
 //  get user available credit data
 
-const userCredits = async(req,res)=>
-{
-  try 
-  {
-
-    const {clerkId} = req.body;
-
-    const userData = await userModel.findOne({clerkId})
-    res.json({success:true, credits:userData.creditBalance})
-    
-  } 
-  
-  catch (error) {
-
-    console.error(error)
-    res.json({success:false, message:error.message})
-  }
-}
-
-
-//  gateway initialize
-
-
-const stripeInstance = new stripe({
-
-  key_id: process.env.STRIPE_PUBLIC_KEY,
-  key_secret: process.env.STRIPE_SECRET_KEY 
-
-}) 
-
-
-// Api to make payment for credits
-
-const stripePayment = async(req,res)=>
-{
+const userCredits = async (req, res) => {
   try {
-    const {clerkId , planId} = req.body;
+    const { clerkId } = req.body;
 
-    const userData = await userModel.findOne({clerkId})
-
-    if(!userData || !planId)
-    {
-      return res.json({success:false , message:'invalid credentials'})
-    }
-
-
-    let credits , plan , amount , date
-
-    switch (planId) {
-      case 'Basic':
-        plan = 'Basic'
-        credits=100
-        amount=10
-        break;
-    
-        case 'Advanced':
-        plan = 'Advanced'
-        credits=500
-        amount=50
-        break;
-
-        case 'Business':
-        plan = 'Bussiness'
-        credits=5000
-        amount=250
-        break;
-
-      default:
-        break;
-    }
-
-    date = Date.now()
-
-    const transactionData =
-    {
-      clerkId,
-      plan,
-      amount,
-      credits,
-      date,
-    }
-
-    const newTransaction =  await transactionModel.create(transactionData)
-
-    const options = {
-      amount: amount*100,
-      currency: process.env.CURRENCY,
-      receipt: newTransaction._id,
-    }
-
-
-    await stripeInstance.orders.create(options,(error,order)=>
-    {
-      if(error)
-      {
-        return res.json({status:'false', message:error})
-      }
-
-      res.json({success:true , order})
-    })
-
-
-  } 
-  
-  catch (error) {
-    
+    const userData = await userModel.findOne({ clerkId });
+    res.json({ success: true, credits: userData.creditBalance });
+  } catch (error) {
+    console.error(error);
+    res.json({ success: false, message: error.message });
   }
-}
+};
 
-
-
-
-
-export { clerkWebHooks , userCredits , stripePayment};
+export { clerkWebHooks, userCredits };

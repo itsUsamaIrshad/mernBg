@@ -5,6 +5,7 @@ import userModel from '../models/userModel.js'
 
 
 const removeBgImage = async (req, res) => {
+
   try {
     const { clerkId } = req.body;
 
