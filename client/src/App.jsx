@@ -4,7 +4,7 @@ import { Route, Routes } from 'react-router-dom'
 import BuyCredit from './pages/BuyCredit'
 import Result from './pages/Result'
 import Home from './pages/Home'
-import Navbar from './components/navbar'
+import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import {ToastContainer} from 'react-toastify'
 import "react-toastify/dist/ReactToastify.css"
