@@ -6,6 +6,7 @@ import { AppContext } from "../context/AppContext";
 import { motion } from "framer-motion";
 
 const Navbar = () => {
+
   const { openSignIn } = useClerk();
   const navigate = useNavigate();
   const { isSignedIn, user } = useUser();
@@ -24,6 +25,8 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isSignedIn]);
 
+
+
   return (
     <motion.header 
       initial={{ y: -100 }}
@@ -37,7 +40,7 @@ const Navbar = () => {
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
+         
           <Link to="/">
             <motion.div 
               whileHover={{ scale: 1.05 }}
@@ -96,7 +99,7 @@ const Navbar = () => {
                   />
                   {credit > 0 && (
                     <span className="absolute -mt-3 -mr-3 bg-blue-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
-                      {credit}
+                      {credit} || 0
                     </span>
                   )}
                 </button>

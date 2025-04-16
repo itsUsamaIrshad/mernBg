@@ -1,6 +1,7 @@
 import { Webhook } from "svix";
 import userModel from "../models/userModel.js";
 
+
 const clerkWebHooks = async (req, res) => {
   console.log("🔔 Webhook route hit hua");
   try {
@@ -67,6 +68,7 @@ const userCredits = async (req, res) => {
     const { clerkId } = req.body;
 
     const userData = await userModel.findOne({ clerkId });
+    console.log(userData)
     res.json({ success: true, credits: userData.creditBalance });
   } catch (error) {
     console.error(error);

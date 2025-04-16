@@ -7,8 +7,6 @@ import { motion } from 'framer-motion'
 const Result = () => {
   const {  resultImage, image, resetImage } = useContext(AppContext)
 
-  
-
   return (
     <motion.div 
       initial={{ opacity: 0 }}

@@ -1,5 +1,4 @@
 import React from 'react'
-import './App.css'
 import { Route, Routes } from 'react-router-dom'
 import BuyCredit from './pages/BuyCredit'
 import Result from './pages/Result'
